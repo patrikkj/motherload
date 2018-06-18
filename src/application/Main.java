@@ -1,4 +1,4 @@
-package core;
+package application;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,8 +11,8 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 
 		Pane root = new Pane();
-		Scene scene = new Scene(root, 800, 600);
-		
+		Scene scene = new Scene(root, Settings.sceneWidth.get(), Settings.sceneHeight.get(), Settings.sceneColor.get());
+
 		stage.setScene(scene);
 		stage.show();
 		

@@ -1,11 +1,15 @@
 package items;
 
 public enum Engine {
-	Standard(200);
+	Standard(5000);
 	
-	public final int FORCE;
+	private final double power;
 	
-	Engine(int FORCE) {
-		this.FORCE = FORCE;
+	Engine(double power) {
+		this.power = power;
+	}
+	
+	public double getPower() {
+		return power;
 	}
 }
