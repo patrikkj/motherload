@@ -1,198 +1,146 @@
 package application;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import entities.Entity;
 import entities.Ship;
-import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
+import enums.Material;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
-import map.Chunk;
-import utils.Direction;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
+import utils.Vector2D;
+import world.World;
 
-public class Game {
-	private Renderer renderer;
-	protected Scene scene;
-	protected Pane root;
-	protected Ship ship;
-	protected Direction direction;
-	public static boolean UP, DOWN, LEFT, RIGHT, CONTROL, SHIFT;
-	protected List<Entity> entities = new ArrayList<>();
-	protected List<Chunk> chunks = new ArrayList<>();
+public class Game implements Runnable {
+	// Game instance
+	private static Game game;
+		
+	// References
+	private World world;
+	private Controls controls;
+	private RenderEngine renderEngine;
 	
-	
-	// Fields for estimating framerate
-	private double thisFrame = System.nanoTime();
-	private double lastFrame;
-	protected double deltaTime;
-	@Override
-	public String toString() {
-		return String.format("Game [deltaTime=%s, fps=%s]", deltaTime, fps);
-	}
+	// Entity references
+	private Ship ship;
 
-	protected double fps;
+	// Rendering
 
 	
-	public Game(Scene scene, Pane root) {
+	// Layout references
+	private Scene scene;
+	private StackPane root;
+	private Canvas canvas;
+	private GraphicsContext gc;
+	
+	
+	
+	
+	// Constructor
+	public Game(Scene scene, StackPane root, Canvas canvas) {
+		Game.game = this;
+		
+		this.world = new World();
+		this.controls = new Controls(); 
+		
 		this.scene = scene;
 		this.root = root;
+		this.canvas = canvas;
+		this.gc = canvas.getGraphicsContext2D();
+		
+		this.ship = new Ship(new Vector2D(), 200, null);
+		this.renderEngine = new RenderEngine();
+		
+		initialize();
 	}
 	
-
-	/**
-	 * Initializes game.
-	 */
 	private void initialize() {
-		ship = new Ship();
-		entities.add(ship);
-		
-		chunks.add(new Chunk(0, 0));
-		renderer = new Renderer(this);
-		setKeyListeners();
-		
-		root.getChildren().addAll(chunks);
-		root.getChildren().addAll(entities);
-		
+		controls.setKeyListeners();
 		
 	}
 	
+	
+	/**
+	 * Returns the one instance of this class.
+	 */
+	public static Game get() {
+		return game;
+	}
+	
+	
+	
+	
+	//// Game logic ////
 	/**
 	 * Main game loop.
 	 */
 	private void gameLoop() {
 		// Updates
-		updateFramerate();
-		updateDirection();
+		renderEngine.updateFramerate();
+		controls.updateUserInput();
+		world.updateActiveChunks(ship.getPosition());
 		
+		if (controls.getActionKey() == KeyCode.CONTROL) {
+			System.out.println("Control pressed");
+			world.getBlocks(World.vectorToGlobalID(ship.getPosition().addNew(ship.getOffset())), Settings.digRadius.get()).forEach(b -> b.setBlock(Material.AIR));
+		}
 		// Entity movement
-		ship.applyForces(direction);
-		entities.forEach(e -> e.move(deltaTime));
+		ship.calculateForce(controls.getDirection());
+		ship.move(renderEngine.getDeltaTime());
 		
 		// Rendering
-		renderer.render();
-		if (chunks.stream().flatMap(c -> c.getBlocks().stream()).anyMatch(e -> ship.intersects(e)))
-			ship.getVelocity().set(0, 0);
-//		System.out.println();
-		System.out.println(this);
+		renderEngine.render(gc);
+		
+//		System.out.println(this);
+//		System.out.println("Ship: " + ship.getPos());
+//		System.out.println(ship.getBounds());
 	}
-
 	
-	/////////////////////
-	//// Game launch ////
-	/////////////////////
 	/**
 	 * Initializes game and starts game loop.
 	 */
 	public void run() {
-		initialize();
-		AnimationTimer animationTimer = new AnimationTimer() {
-			@Override
-			public void handle(long arg0) {
-				long start = System.nanoTime();
-				gameLoop();
-				System.out.println(1_000_000_000d / (System.nanoTime() - start));
-//				long start2 = System.nanoTime();
-//				gameLoop();
-//				System.out.println(1_000_000_000d / (System.nanoTime() - start2));
-//				long start3 = System.nanoTime();
-//				gameLoop();
-//				System.out.println(1_000_000_000d / (System.nanoTime() - start3));
-			}
-		};
-		animationTimer.start();
+		Timeline timeline = new Timeline(200); // 200
+		timeline.setCycleCount(Animation.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(8), e -> {	 // 1
+			gameLoop(); 
+		}));
+		timeline.play();
 	}
-	
+
 	
 	
 
 	
-	////////////////////
-	//// User input ////
-	////////////////////
-	
-	/**
-	 * Assigns key listners.
-	 */
-	private void setKeyListeners() {
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				KeyCode key = event.getCode();
-				switch (key) {
-				case UP: UP = true; break;
-				case DOWN: DOWN = true; break;
-				case LEFT: LEFT = true; break;
-				case RIGHT: RIGHT = true; break;
-				case CONTROL: CONTROL = true; break;
-				case SHIFT: SHIFT = true; break;
-				default:
-					System.out.println("Key not supported: " + key.getName());
-					return;
-				}
-			}
-		});
-		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				KeyCode key = event.getCode();
-				switch (key) {
-				case UP: UP = false; break;
-				case DOWN: DOWN = false; break;
-				case LEFT: LEFT = false; break;
-				case RIGHT: RIGHT = false; break;
-				case CONTROL: CONTROL = false; break;
-				case SHIFT: SHIFT = false; break;
-				default:
-					System.out.println("Key not supported: " + key.getName());
-					return;
-				}
-			}
-		});
-	}
-	
-	/**
-	 * Checks user input and updates direction
-	 */
-	private void updateDirection() {
-		int dir = 0;
-		
-		dir += (UP) ? dir + 1 : dir;
-		dir += (DOWN) ? dir + 1 : dir;
-		dir += (RIGHT) ? dir + 1 : dir;
-		dir += (LEFT) ? dir + 1 : dir;
-		
-		switch (dir) {
-		case 10: direction = Direction.NE; break;
-		case 9: direction = Direction.NW; break;
-		case 8: direction = Direction.N; break;
-		case 6: direction = Direction.SE; break;
-		case 5: direction = Direction.SW; break;
-		case 4: direction = Direction.S; break;
-		case 2: direction = Direction.E; break;
-		case 1: direction = Direction.W; break;
-		case 0: direction = Direction.NONE; break;
-		}
-	}
 	
 	
-	/**
-	 * Called at the start of every gameLoop, updating framerate.
-	 */
-	private void updateFramerate() {
-		lastFrame = thisFrame;
-		thisFrame = System.nanoTime();
-		deltaTime = (thisFrame - lastFrame) / 1_000_000_000d;
-//		deltaTime *= Settings.timeScaleFactor.get();
-		fps = 1_000_000_000d / (thisFrame - lastFrame);
-	}
-	
-	
-	
+	//// Getters ////
 	public Ship getShip() {
 		return ship;
 	}
+	public Scene getScene() {
+		return scene;
+	}
+	public StackPane getRoot() {
+		return root;
+	}
+	public Canvas getCanvas() {
+		return canvas;
+	}
+	public World getWorld() {
+		return world;
+	}
+	public Controls getControls() {
+		return controls;
+	}
+	public RenderEngine getRenderEngine() {
+		return renderEngine;
+	}
+
+	
+	//// Other ////
+	
+
 }

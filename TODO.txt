@@ -1,0 +1,22 @@
+DONE Add blocks to world
+Random (seed) ore generation
+DONE Resize support
+DONE Collision detection
+World boundaries
+
+If high speed collision
+use deltaTime to estimate traversed distance, 
+run collision check in increments of 10% of full movement
+
+DONE allow window resize
+
+DONE handle simultaneous collisions
+
+special equipment cool rocket, velocity *= 1.1 per collision, propelling away
+can buy blocks to put down for stopping you at the surface at destination
+block swapper
+
+before drill animation, set collidable = false
+after drill animation, set material to air
+
+gui trigger events

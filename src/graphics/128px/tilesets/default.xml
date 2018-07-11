@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset name="default" tilewidth="128" tileheight="128" tilecount="6" columns="0">
+ <grid orientation="orthogonal" width="1" height="1"/>
+ <tile id="0" type="Material">
+  <properties>
+   <property name="blockType" value="dirt"/>
+  </properties>
+  <image width="128" height="128" source="../materials/dirt.png"/>
+ </tile>
+ <tile id="1" type="Material">
+  <properties>
+   <property name="blockType" value="grass"/>
+  </properties>
+  <image width="128" height="128" source="../materials/grass.png"/>
+ </tile>
+ <tile id="2" type="Material">
+  <properties>
+   <property name="blockType" value="ore_amethyst"/>
+  </properties>
+  <image width="128" height="128" source="../materials/ore_amethyst.jpg"/>
+ </tile>
+ <tile id="3" type="Material">
+  <properties>
+   <property name="blockType" value="ore_diamond"/>
+  </properties>
+  <image width="128" height="128" source="../materials/ore_diamond.jpg"/>
+ </tile>
+ <tile id="4" type="Material">
+  <properties>
+   <property name="blockType" value="ore_emerald"/>
+  </properties>
+  <image width="128" height="128" source="../materials/ore_emerald.jpg"/>
+ </tile>
+ <tile id="5" type="Material">
+  <properties>
+   <property name="blockType" value="ore_ruby"/>
+  </properties>
+  <image width="128" height="128" source="../materials/ore_ruby.jpg"/>
+ </tile>
+</tileset>

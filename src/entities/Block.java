@@ -1,21 +1,32 @@
 package entities;
 
-import application.Settings;
-import items.Material;
-import javafx.scene.image.ImageView;
+import enums.Material;
 import utils.Vector2D;
+import world.World;
 
 public class Block extends Entity {
-	private Material material;
+	// Static fields
+	public static Vector2D offset = new Vector2D(0.5, 0.5);
 	
-	public Block(Material material, Vector2D pos) {
-		super(pos, null, null, 0, Settings.blockSize.get() / 2, Settings.blockSize.get() / 2);
-		this.material = material;
-		setImage(material.getImage());
+	// Fields
+	private final int globalID;
+
+	
+	// Constructors
+	public Block(Material material, Vector2D position) {
+		super(position, offset, 1, 1, material);
+		this.globalID = World.vectorToGlobalID(position);
+	}
+	public Block(Material material, Integer globalID) {
+		this(material, World.globalIDToVector(globalID));
+	}
+	public void setBlock(Material material) {
+		setMaterial(material);
 	}
 	
-	public void render() {
-		
+	public int getGlobalID() {
+		return globalID;
 	}
 }
+
 

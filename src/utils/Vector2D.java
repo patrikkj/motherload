@@ -39,11 +39,32 @@ public class Vector2D {
 		y -= v.y;
 		return this;
 	}
+
+	public Vector2D multiply(Vector2D vec) {
+		x *= vec.x;
+		y *= vec.y;
+		return this;
+	}
 	
+	public Vector2D divide(Vector2D vec) {
+		x /= vec.x;
+		y /= vec.y;
+		return this;
+	}
 	
 	// On-vector operations - Vector2D
 	public Vector2D set(double x, double y) {
 		this.x = x;
+		this.y = y;
+		return this;
+	}
+	
+	public Vector2D setX(double x) {
+		this.x = x;
+		return this;
+	}
+	
+	public Vector2D setY(double y) {
 		this.y = y;
 		return this;
 	}
@@ -91,6 +112,14 @@ public class Vector2D {
 		multiply(magnitude());
 		return this;
 	}
+
+	public Vector2D clamp(Vector2D min, Vector2D max) {
+		x = (x < min.x) ? min.x : x;
+		x = (x > max.x) ? max.x : x;
+		y = (y < min.y) ? min.y : y;
+		y = (y > max.y) ? max.y : y;
+		return this;
+	}
 	
 	public Vector2D copy() {
 		return new Vector2D(x, y);
@@ -112,6 +141,24 @@ public class Vector2D {
 	
 	public Vector2D divideNew(double n) {
 		return copy().divide(n);
+	}
+	
+	
+	// Static methods
+	public static Vector2D add(Vector2D v1, Vector2D v2) {
+		return new Vector2D(v1.x + v2.x, v1.y + v2.y);
+	}
+	
+	public static Vector2D subtract(Vector2D v1, Vector2D v2) {
+		return new Vector2D(v1.x - v2.x, v1.y - v2.y);
+	}
+	
+	public static Vector2D multiply(Vector2D v1, Vector2D v2) {
+		return new Vector2D(v1.x * v2.x, v1.y * v2.y);
+	}
+	
+	public static Vector2D divide(Vector2D v1, Vector2D v2) {
+		return new Vector2D(v1.x / v2.x, v1.y / v2.y);
 	}
 	
 	
