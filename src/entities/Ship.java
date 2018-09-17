@@ -2,7 +2,6 @@ package entities;
 
 import java.util.Comparator;
 
-import application.Game;
 import application.Settings;
 import enums.Material;
 import equipment.Engine;

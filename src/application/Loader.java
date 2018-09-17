@@ -24,16 +24,17 @@ import javafx.scene.image.Image;
 
 public class Loader {
 	// Uniform resource locator for default tileset
-	private static final URL DEFAULT_TILESET_URL;
+	private final URL DEFAULT_TILESET_URL;
 	
 	// Uniform resource identifier, used for resolving absolute file paths
-	private static final URI DEFAULT_TILESET_URI;
+	private final URI DEFAULT_TILESET_URI;
 	
 	// O(1) mapping from resources to corresponding image
-	public static final EnumMap<Resource, Image> images = new EnumMap<>(Resource.class);
+	public final EnumMap<Resource, Image> images = new EnumMap<>(Resource.class);
 	
-	// Static initializaton block
-	static {
+	
+	// Constructor
+	public Loader() {
 		try {
 			DEFAULT_TILESET_URL = Loader.class.getResource("../graphics/128px/tilesets/default.xml");
 			DEFAULT_TILESET_URI = DEFAULT_TILESET_URL.toURI();
@@ -45,18 +46,18 @@ public class Loader {
 	}
 	
 	
-	// Tileset loading
+	// Tilesets
 	/**
 	 * Returns the image associated with given resource, if present.
 	 */
-	public static Image getImage(Resource resource) {
+	public Image getImage(Resource resource) {
 		return images.get(resource);
 	}
 
 	/**
 	 * Overwrites image mapping with tileset represented by resource identifier.
 	 */
-	private static void loadTileSet(URI uri) {
+	private void loadTileSet(URI uri) {
 		// XML Document reference
 		Document doc = parseXML(uri);
 
@@ -112,7 +113,7 @@ public class Loader {
 	 * Creates a mapping between resource represented by {@code type} to image
 	 * represented by {@code uri} and {@code relativePath}.
 	 */
-	private static void putImage(URI uri, String type, String relativePath) {
+	private void putImage(URI uri, String type, String relativePath) {
 		Resource resource = Resource.valueOf(type.toUpperCase());
 		URI resolved = uri.resolve(relativePath);
 		Image image = null;
@@ -151,7 +152,5 @@ public class Loader {
 	}
 	
 	
-	public static void main(String[] args) {
-	}
 }
 

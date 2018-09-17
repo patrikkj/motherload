@@ -1,10 +1,13 @@
 package entities;
 
+import com.sun.javafx.geom.Rectangle;
+
 import enums.Material;
 import enums.Resource;
+import events.CollisionEvent;
+import events.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
-import utils.Collision;
-import utils.Event;
 import utils.Rectangle2D;
 import utils.Vector2D;
 
@@ -21,6 +24,7 @@ public class Entity {
 	/*
 	 * Sprite rendering
 	 */
+	private Image image;
 	private double width;
 	private double height;
 	private boolean flipX;
@@ -55,9 +59,9 @@ public class Entity {
 	 * Collision events
 	 */
 //	private List<Entity> activeCollisions;
-	private Event<Collision> onCollisionStart;
-	private Event<Collision> onCollisionStay;
-	private Event<Collision> onCollisionEnd;
+	private EventHandler<CollisionEvent> collisionStartHandler;
+	private EventHandler<CollisionEvent> collisionStayHandler;
+	private EventHandler<CollisionEvent> collisionEndHandler;
 	
 	
 	/**
@@ -131,9 +135,9 @@ public class Entity {
 			// Collisions
 			collisionType = CollisionType.RIGID;
 //			activeCollisions = new ArrayList<>();
-			onCollisionStart = (collision, e1, e2) -> {};
-			onCollisionStay = (collision, e1, e2) -> {};
-			onCollisionEnd = (collision, e1, e2) -> {};
+			collisionStartHandler = (collisionEvent) -> {};
+			collisionStayHandler = (collisionEvent) -> {};
+			collisionEndHandler = (collisionEvent) -> {};
 			break;
 		}
 	}
@@ -160,7 +164,7 @@ public class Entity {
 	}
 	// Rendering
 	public Image getImage() {
-		return resource.getImage();
+		return image;
 	}
 	public double getWidth() {
 		return width;
@@ -218,14 +222,14 @@ public class Entity {
 		return lockRotation;
 	}
 	// Collisions
-	public Event<Collision> getOnCollisionStart() {
-		return onCollisionStart;
+	public EventHandler<CollisionEvent> getCollisionStartHandler() {
+		return collisionStartHandler;
 	}
-	public Event<Collision> getOnCollisionStay() {
-		return onCollisionStay;
+	public EventHandler<CollisionEvent> getCollisionStayHandler() {
+		return collisionStayHandler;
 	}
-	public Event<Collision> getOnCollisionEnd() {
-		return onCollisionEnd;
+	public EventHandler<CollisionEvent> getCollisionEndHandler() {
+		return collisionEndHandler;
 	}
 	
 	/*
@@ -298,14 +302,14 @@ public class Entity {
 		this.lockRotation = lockRotation;
 	}
 	// Collisions
-	public void setOnCollisionStart(Event<Collision> onCollisionStart) {
-		this.onCollisionStart = onCollisionStart;
+	public void setCollisionStartHandler(EventHandler<CollisionEvent> collisionStartHandler) {
+		this.collisionStartHandler = collisionStartHandler;
 	}
-	public void setOnCollisionStay(Event<Collision> onCollisionStay) {
-		this.onCollisionStay = onCollisionStay;
+	public void setCollisionStayHandler(EventHandler<CollisionEvent> collisionStayHandler) {
+		this.collisionStayHandler = collisionStayHandler;
 	}
-	public void setOnCollisionEnd(Event<Collision> onCollisionEnd) {
-		this.onCollisionEnd = onCollisionEnd;
+	public void setCollisionEndHandler(EventHandler<CollisionEvent> collisionEndHandler) {
+		this.collisionEndHandler = collisionEndHandler;
 	}
 	
 	/**
@@ -314,8 +318,6 @@ public class Entity {
 	public void move() {
 		
 	}
-	
-	
 	// Dynamics
 	public void resetForce() {
 		this.force.set(0, 0);
@@ -350,9 +352,6 @@ public class Entity {
 		return pos2.subtract(pos1).magnitude();
 	}
 
-//	public static void main(String[] args) {
-//		Entity e1 = new Entity(new Vector2D(), new Vector2D(), 100, 128, 128, null);
-//	}
 }
 
 

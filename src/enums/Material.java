@@ -1,6 +1,5 @@
 package enums;
 
-import application.Loader;
 import javafx.scene.image.Image;
 
 public enum Material {

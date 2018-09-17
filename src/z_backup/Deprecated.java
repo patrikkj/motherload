@@ -1,13 +1,5 @@
 package z_backup;
 
-import entities.Entity;
-import javafx.animation.Interpolator;
-import javafx.animation.TranslateTransition;
-import javafx.scene.input.KeyCode;
-import javafx.util.Duration;
-import utils.Direction;
-import utils.Vector2D;
-
 public class Deprecated {
 //	/**
 //	 * Returns wether this entity intersects with input entity.

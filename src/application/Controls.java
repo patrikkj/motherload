@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import utils.Direction;
 
 public class Controls {
@@ -28,18 +29,46 @@ public class Controls {
 	}
 	
 	/**
-	 * Assigns key listners.
+	 * Assigns key listeners.
 	 */
 	protected void setKeyListeners() {
-		Scene scene = Game.get().getRoot().getScene();
+//		Scene scene = Game.get().getRoot().getScene();
+		AnchorPane rootPane = new AnchorPane(); 
 		
+		
+		// Eksempel på key bindings
+		Scene scene = rootPane.getScene();
+		
+		// Angir hva som skal skje idet et "KeyEvent" blir registrert.
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
 				KeyCode key = event.getCode();
-				keysPressed.put(key, true);
+				
+				switch(key) {
+				case DIGIT1:
+					System.out.println("1-tasten ble trykket.");
+					break;
+				case DIGIT2:
+					System.out.println("2-tasten ble trykket.");
+					break;
+				case DIGIT3:
+					System.out.println("3-tasten ble trykket.");
+					break;
+				case RIGHT:
+					System.out.println("Høyre piltast ble trykket.");
+					break;
+				}
 			}
 		});
+//		
+//		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//			@Override
+//			public void handle(KeyEvent event) {
+//				KeyCode key = event.getCode();
+//				keysPressed.put(key, true);
+//			}
+//		});
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {

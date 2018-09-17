@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import application.Game;
 import application.Settings;
 import entities.Block;
 import entities.Entity;

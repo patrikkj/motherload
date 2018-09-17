@@ -3,9 +3,7 @@ package world;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.stream.Stream;
 
-import application.Game;
 import application.Settings;
 import entities.Block;
 import enums.Material;
