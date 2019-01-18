@@ -89,12 +89,15 @@ public class Ship extends Entity {
 		Block block = getCollidingBlock();
 		
 		// Handle collisions while there are colliding entities
+		
 		while (block != null) {
 //			System.out.println(++collisionCount);
 			Collision collision = createCollision(block, deltaTime);
 			applyCollision(collision);
 			block = getCollidingBlock();
 		}
+		
+		
 	}
 	
 	/**
@@ -106,7 +109,8 @@ public class Ship extends Entity {
 		Comparator<Block> incDistance = (b1, b2) -> (int) Math.signum(Entity.distanceBetween(this, b1) - Entity.distanceBetween(this, b2));
 		
 		// Colliding block, if any
-		return World.get().getBlocks(getPosition(), Settings.collisionRadius.get())
+		return World.get()
+				.getBlocks(getPosition(), Settings.collisionRadius.get())
 				.stream()
 				.sorted(incDistance)
 				.filter(b -> Entity.intersects(this, b))
@@ -136,14 +140,14 @@ public class Ship extends Entity {
 		else
 			direction = (delta.x < 0) ? Direction.W : Direction.E;
 
-		System.out.println("New Collision!");
-		System.out.println("Block: " + block.getGlobalID());
-		System.out.println("Block BB: " + block.getBounds());
-		System.out.println("Ship BB: " + getBounds());
-		System.out.println("delta: " + delta);
-		System.out.printf("epsilonX: %s %s%n", epsilonX, (delta.x < 0) ? "(1)" : "(2)");
-		System.out.printf("epsilonY: %s %s%n", epsilonY, (delta.y < 0) ? "(1)" : "(2)");
-		System.out.println(direction);
+//		System.out.println("New Collision!");
+//		System.out.println("Block: " + block.getGlobalID());
+//		System.out.println("Block BB: " + block.getBounds());
+//		System.out.println("Ship BB: " + getBounds());
+//		System.out.println("delta: " + delta);
+//		System.out.printf("epsilonX: %s %s%n", epsilonX, (delta.x < 0) ? "(1)" : "(2)");
+//		System.out.printf("epsilonY: %s %s%n", epsilonY, (delta.y < 0) ? "(1)" : "(2)");
+//		System.out.println(direction);
 
 		return new Collision(material, direction, deltaTime);
 	}

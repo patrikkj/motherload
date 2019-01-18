@@ -25,9 +25,6 @@ public class Game implements Runnable {
 	
 	// Entity references
 	private Ship ship;
-
-	// Rendering
-
 	
 	// Layout references
 	private Scene scene;
@@ -36,29 +33,26 @@ public class Game implements Runnable {
 	private GraphicsContext gc;
 	
 	
-	
-	
 	// Constructor
 	public Game(Scene scene, StackPane root, Canvas canvas) {
 		Game.game = this;
 		
-		this.world = new World();
-		this.controls = new Controls(); 
+		this.world = World.get();
+		this.controls = Controls.get(); 
 		
 		this.scene = scene;
 		this.root = root;
 		this.canvas = canvas;
 		this.gc = canvas.getGraphicsContext2D();
 		
-		this.ship = new Ship(new Vector2D(), 200, null);
+		this.ship = new Ship(new Vector2D(0, -10), 200, null);
 		this.renderEngine = new RenderEngine();
-		
+
 		initialize();
 	}
 	
 	private void initialize() {
 		controls.setKeyListeners();
-		
 	}
 	
 	
@@ -80,22 +74,19 @@ public class Game implements Runnable {
 		// Updates
 		renderEngine.updateFramerate();
 		controls.updateUserInput();
-		world.updateActiveChunks(ship.getPosition());
+		World.get().updateActiveChunks(ship.getPosition());
 		
 		if (controls.getActionKey() == KeyCode.CONTROL) {
 			System.out.println("Control pressed");
 			world.getBlocks(World.vectorToGlobalID(ship.getPosition().addNew(ship.getOffset())), Settings.digRadius.get()).forEach(b -> b.setBlock(Material.AIR));
 		}
+		
 		// Entity movement
 		ship.calculateForce(controls.getDirection());
 		ship.move(renderEngine.getDeltaTime());
 		
 		// Rendering
 		renderEngine.render(gc);
-		
-//		System.out.println(this);
-//		System.out.println("Ship: " + ship.getPos());
-//		System.out.println(ship.getBounds());
 	}
 	
 	/**

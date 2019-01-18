@@ -24,10 +24,11 @@ public class RenderEngine {
 	private double deltaTime, fps;
 
 	// RenderEngine instance
-	private static RenderEngine renderEngine;
+	private static RenderEngine renderEngine = new RenderEngine();
 	
 	
 	public RenderEngine() {
+		RenderEngine.renderEngine = this;
 		this.game = Game.get();
 		this.ship = game.getShip();
 		
@@ -83,11 +84,11 @@ public class RenderEngine {
 		for (Chunk chunk : chunks)
 			for (Block block : chunk) {
 				final Vector2D layoutCoords = toLayoutCoords(block.getPosition());
-//				gc.setFill(Color.CADETBLUE);
-//				gc.fillRect(layoutCoords.x, layoutCoords.y, Settings.blockSize.get(), Settings.blockSize.get());
-//				gc.setFill(Color.BLACK);
-//				gc.fillOval(layoutCoords.x, layoutCoords.y, 3, 3);
-				gc.drawImage(block.getImage(), layoutCoords.x, layoutCoords.y);
+				gc.setFill(Color.CADETBLUE);
+				gc.fillRect(layoutCoords.x, layoutCoords.y, Settings.blockSize.get(), Settings.blockSize.get());
+				gc.setFill(Color.BLACK);
+				gc.fillOval(layoutCoords.x, layoutCoords.y, 3, 3);
+//				gc.drawImage(block.getImage(), layoutCoords.x, layoutCoords.y);
 //				gc.setFill(Color.WHITE);
 //				gc.setFont(new javafx.scene.text.Font(18));
 //				gc.fillText(Integer.toString(block.getGlobalID()), layoutCoords.x, layoutCoords.y);

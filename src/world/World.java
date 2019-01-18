@@ -14,7 +14,7 @@ import utils.Vector2D;
 
 public class World {
 	// World instance
-	private static World world;
+	private static World world = new World();
 
 	// Rendering (Chunks are separated from other entities)
 	private int currentChunkID;
@@ -22,8 +22,6 @@ public class World {
 	private Collection<Entity> entities = new ArrayList<>(); 
 	private Collection<Chunk> activeChunks = new ArrayList<>();
 
-	
-	
 	
 	/**
 	 * Returns the one instance of this class.

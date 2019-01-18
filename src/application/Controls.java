@@ -12,7 +12,7 @@ import utils.Direction;
 
 public class Controls {
 	// Controls instance
-	private static Controls controls;
+	private static Controls controls = new Controls();
 	
 	// User input
 	private Direction direction;
@@ -20,6 +20,11 @@ public class Controls {
 	public static Map<KeyCode, Boolean> keysPressed = new HashMap<>();
 	public static boolean UP, DOWN, LEFT, RIGHT, CONTROL, SHIFT,
 							DIGIT1, DIGIT2, DIGIT3, DIGIT4, DIGIT5;
+	
+	
+	private Controls() {
+		
+	}
 	
 	/**
 	 * Returns the one instance of this class.
@@ -32,43 +37,43 @@ public class Controls {
 	 * Assigns key listeners.
 	 */
 	protected void setKeyListeners() {
-//		Scene scene = Game.get().getRoot().getScene();
-		AnchorPane rootPane = new AnchorPane(); 
+		Scene scene = Game.get().getRoot().getScene();
+//		AnchorPane rootPane = new AnchorPane(); 
 		
 		
-		// Eksempel på key bindings
-		Scene scene = rootPane.getScene();
+		// Eksempel pï¿½ key bindings
+//		Scene scene = rootPane.getScene();
 		
-		// Angir hva som skal skje idet et "KeyEvent" blir registrert.
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				KeyCode key = event.getCode();
-				
-				switch(key) {
-				case DIGIT1:
-					System.out.println("1-tasten ble trykket.");
-					break;
-				case DIGIT2:
-					System.out.println("2-tasten ble trykket.");
-					break;
-				case DIGIT3:
-					System.out.println("3-tasten ble trykket.");
-					break;
-				case RIGHT:
-					System.out.println("Høyre piltast ble trykket.");
-					break;
-				}
-			}
-		});
-//		
+//		// Angir hva som skal skje idet et "KeyEvent" blir registrert.
 //		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 //			@Override
 //			public void handle(KeyEvent event) {
 //				KeyCode key = event.getCode();
-//				keysPressed.put(key, true);
+//				System.out.println("KEYYYYYYYYYYYYYYYYY PRESSED");
+//				switch(key) {
+//				case DIGIT1:
+//					System.out.println("1-tasten ble trykket.");
+//					break;
+//				case DIGIT2:
+//					System.out.println("2-tasten ble trykket.");
+//					break;
+//				case DIGIT3:
+//					System.out.println("3-tasten ble trykket.");
+//					break;
+//				case RIGHT:
+//					System.out.println("Hï¿½yre piltast ble trykket.");
+//					break;
+//				}
 //			}
 //		});
+		
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				KeyCode key = event.getCode();
+				keysPressed.put(key, true);
+			}
+		});
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {

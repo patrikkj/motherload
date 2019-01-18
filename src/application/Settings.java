@@ -20,7 +20,7 @@ public class Settings {
 	public static final ObjectProperty<Color> sceneColor = new SimpleObjectProperty<>(Color.DARKGRAY);
 
 	// Blocks
-	public static final DoubleProperty blockSize = new SimpleDoubleProperty(128);// 64, 256 for debug
+	public static final DoubleProperty blockSize = new SimpleDoubleProperty(64);// 64, 256 for debug
 	public static final DoubleProperty blocksX = new SimpleDoubleProperty();
 	public static final DoubleProperty blocksY = new SimpleDoubleProperty();
 	public static final IntegerProperty maxBlocksX = new SimpleIntegerProperty();
@@ -53,13 +53,13 @@ public class Settings {
 	// Ship
 	public static final DoubleProperty engineScaleFactor = new SimpleDoubleProperty(1);// 2.5, 1,5 for debug
 	public static final IntegerProperty collisionRadius = new SimpleIntegerProperty(1);
-	public static final DoubleProperty shipWidthPixels = new SimpleDoubleProperty(48*2);// 61, 192 for debug
-	public static final DoubleProperty shipHeightPixels = new SimpleDoubleProperty(48*2);// 34, 64 for debug
+	public static final DoubleProperty shipWidthPixels = new SimpleDoubleProperty(48*1);// 61, 192 for debug
+	public static final DoubleProperty shipHeightPixels = new SimpleDoubleProperty(48*1);// 34, 64 for debug
 	public static final DoubleProperty shipWidthGrid = new SimpleDoubleProperty();
 	public static final DoubleProperty shipHeightGrid = new SimpleDoubleProperty();
 	
 	// Debugging
-	public static final IntegerProperty digRadius= new SimpleIntegerProperty(1);
+	public static final IntegerProperty digRadius= new SimpleIntegerProperty(2);
 	
 	
 	// Composite bindings
