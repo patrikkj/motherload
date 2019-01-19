@@ -89,9 +89,7 @@ public class Ship extends Entity {
 		Block block = getCollidingBlock();
 		
 		// Handle collisions while there are colliding entities
-		
 		while (block != null) {
-//			System.out.println(++collisionCount);
 			Collision collision = createCollision(block, deltaTime);
 			applyCollision(collision);
 			block = getCollidingBlock();

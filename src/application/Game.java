@@ -2,6 +2,7 @@ package application;
 
 import entities.Ship;
 import enums.Material;
+import events.EventManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -74,10 +75,11 @@ public class Game implements Runnable {
 		// Updates
 		renderEngine.updateFramerate();
 		controls.updateUserInput();
+		EventManager.get().checkEvents();
 		World.get().updateActiveChunks(ship.getPosition());
 		
 		if (controls.getActionKey() == KeyCode.CONTROL) {
-			System.out.println("Control pressed");
+//			System.out.println("Control pressed");
 			world.getBlocks(World.vectorToGlobalID(ship.getPosition().addNew(ship.getOffset())), Settings.digRadius.get()).forEach(b -> b.setBlock(Material.AIR));
 		}
 		

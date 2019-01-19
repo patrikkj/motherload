@@ -18,8 +18,6 @@ public class Controls {
 	private Direction direction;
 	private KeyCode actionKey;
 	public static Map<KeyCode, Boolean> keysPressed = new HashMap<>();
-	public static boolean UP, DOWN, LEFT, RIGHT, CONTROL, SHIFT,
-							DIGIT1, DIGIT2, DIGIT3, DIGIT4, DIGIT5;
 	
 	
 	private Controls() {

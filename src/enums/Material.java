@@ -3,7 +3,8 @@ package enums;
 import javafx.scene.image.Image;
 
 public enum Material {
-	//				Drillable	Collidable	Hardness	Friction	Elasticity	Name		
+	//				Drillable	Collidable	Hardness	Friction	Elasticity	Name
+//	NONE			(false,		false,		0, 			0, 			0, 			"None"),
 	AIR				(false,		false,		0, 			0, 			0, 			"Air"),
 	GRASS			(true, 		true, 		80, 		0.6,		0.5, 		"Grass"),
 	DIRT			(true, 		true, 		80, 		0.6,		0.5, 		"Dirt"),

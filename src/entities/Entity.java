@@ -1,12 +1,9 @@
 package entities;
 
-import com.sun.javafx.geom.Rectangle;
-
 import enums.Material;
 import enums.Resource;
 import events.CollisionEvent;
 import events.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import utils.Rectangle2D;
 import utils.Vector2D;

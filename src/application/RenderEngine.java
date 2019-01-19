@@ -1,16 +1,20 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import entities.Block;
 import entities.Ship;
+import events.EventHandler;
+import events.TextDisplayEvent;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import utils.Vector2D;
 import world.Chunk;
 import world.World;
 
-public class RenderEngine {
+public class RenderEngine implements EventHandler<TextDisplayEvent>{
 	// Game references
 	private Game game;
 	private Ship ship;
@@ -25,6 +29,9 @@ public class RenderEngine {
 
 	// RenderEngine instance
 	private static RenderEngine renderEngine = new RenderEngine();
+	
+	// Rendering events
+	List<TextDisplayEvent> activeTextDisplayEvents = new ArrayList<>();
 	
 	
 	public RenderEngine() {
@@ -43,6 +50,7 @@ public class RenderEngine {
 		return renderEngine;
 	}
 	
+	
 	/**
 	 * Renders all cached entities.
 	 */
@@ -51,11 +59,13 @@ public class RenderEngine {
 		gc.setFill(Settings.sceneColor.get());
 		gc.fillRect(0, 0, Settings.sceneWidth.get(), Settings.sceneHeight.get());
 		// Debug rendering
-		renderGrid(gc);
+//		renderGrid(gc);
 		// Render chunks
 		renderChunks(gc);
 		// Render ship
 		renderShip(gc);
+		// Render events
+		renderEvents(gc);
 		// Move camera
 		moveCamera();
 	}
@@ -69,11 +79,36 @@ public class RenderEngine {
 //		gc.drawImage(game.ship.getImage(), layoutCoords.x, layoutCoords.y);
 		gc.setFill(Color.BROWN);
 		gc.fillRect(layoutCoords.x, layoutCoords.y, Settings.shipWidthPixels.get(), Settings.shipHeightPixels.get());
-//		gc.setFill(Color.BLACK);
-//		gc.fillOval(layoutCoords.x, layoutCoords.y, 3, 3);
-//		gc.fillOval(layoutCoords.x, debugCoords.y - 3, 3, 3);
-//		gc.fillOval(debugCoords.x - 3, debugCoords.y - 3, 3, 3);
-//		gc.fillOval(debugCoords.x - 3, layoutCoords.y, 3, 3);
+	}
+	
+	/**
+	 * Renders ship at new location.
+	 */
+	private void renderEvents(GraphicsContext gc) {
+		for (TextDisplayEvent event : activeTextDisplayEvents) {
+			gc.setFill(event.getColor());
+			gc.setFont(event.getFont());
+			
+			Vector2D coords = null;
+			switch (event.getDisplayType()) {
+			case INIT_COORD:
+				 coords = event.getCoords();
+				break;
+			case LOCK_COORD:
+				coords = event.getCoords();
+				break;
+			case INIT_ENTITY:
+				coords = event.getEntity().getPosition();
+				break;
+			case LOCK_ENTITY:
+				coords = event.getEntity().getPosition();
+				break;
+			default:
+				break;
+			}
+			Vector2D layoutCoords = toLayoutCoords(coords);
+			gc.fillText(event.getText(), layoutCoords.x, layoutCoords.y);
+		}
 	}
 	
 	/**
@@ -90,8 +125,8 @@ public class RenderEngine {
 				gc.fillOval(layoutCoords.x, layoutCoords.y, 3, 3);
 //				gc.drawImage(block.getImage(), layoutCoords.x, layoutCoords.y);
 //				gc.setFill(Color.WHITE);
-//				gc.setFont(new javafx.scene.text.Font(18));
-//				gc.fillText(Integer.toString(block.getGlobalID()), layoutCoords.x, layoutCoords.y);
+				gc.setFont(new javafx.scene.text.Font(18));
+				gc.fillText(Integer.toString(block.getGlobalID()), layoutCoords.x, layoutCoords.y);
 				
 			}
 	}
@@ -122,6 +157,7 @@ public class RenderEngine {
 		}
 	}
 
+	
 	/**
 	 * Converts world coordinates to screen pixel coordinates.
 	 */
@@ -169,6 +205,13 @@ public class RenderEngine {
 	@Override
 	public String toString() {
 		return String.format("Renderer [game=%s, camera=%s, cameraOffset=%s]", game, camera, cameraOffset);
+	}
+
+	@Override
+	public void handle(TextDisplayEvent t) {
+		t.start();
+		System.out.println("Event handled");
+		activeTextDisplayEvents.add(t);
 	}
 	
 }
