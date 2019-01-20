@@ -4,39 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import application.Game;
-import application.Properties;
-import application.RenderEngine;
 import enums.GameState;
 import javafx.scene.paint.Color;
+import misc.Constants;
 import utils.Vector2D;
 
 public class EventManager {
-	private static EventManager eventManager = new EventManager();
 	private GameState gameState = GameState.ACTIVE;
 	
-	private List<TextDisplayEvent> bufferedEvents = new ArrayList<>();
-	private List<TextDisplayEvent> activeEvents = new ArrayList<>();
-	private List<TextDisplayEvent> processedEvents = new ArrayList<>();
+	private List<TextEvent> bufferedEvents = new ArrayList<>();
+	private List<TextEvent> activeEvents = new ArrayList<>();
+	private List<TextEvent> processedEvents = new ArrayList<>();
 	
 	
-	private EventManager() {
+	public EventManager() {
 		loadEvents();
 	}
 	
-	/**
-	 * Returns the one instance of this class.
-	 */
-	public static EventManager get() {
-		return eventManager;
-	}
-	
-	
-	/*
-	 * Registered TextDisplayEvents.
-	 */
-	
-	private TextDisplayEvent event1 = new TextDisplayEvent("You are far to the right", 
-			Properties.labelfont, 
+	private TextEvent event1 = new TextEvent("You are far to the right", 
+			Constants.labelfont, 
 			Color.BLACK,
 			DisplayType.LOCK_COORD, 
 			Game.get().getShip().getPosition().copy(), 
@@ -59,26 +45,25 @@ public class EventManager {
 	}
 	
 	public void checkEvents() {
-		switch (gameState) {
-		case ACTIVE:
-			for (TextDisplayEvent event : bufferedEvents) 
-				if (event.startPredicate()) {
-					activeEvents.add(event);
-					RenderEngine.get().handle(event); 
-				}
-			break;
-		case FUEL:
-			break;
-		case PAUSED:
-			break;
-		case SHOP:
-			break;
-		default:
-			break;
-		}
-		
-		
-		bufferedEvents.removeAll(activeEvents);
+//		switch (gameState) {
+//		case ACTIVE:
+//			for (TextEvent event : bufferedEvents) 
+//				if (event.startPredicate()) {
+//					activeEvents.add(event);
+//					RenderEngine.get().handle(event); 
+//				}
+//			break;
+//		case FUEL:
+//			break;
+//		case PAUSED:
+//			break;
+//		case SHOP:
+//			break;
+//		default:
+//			break;
+//		}
+//		
+//		bufferedEvents.removeAll(activeEvents);
 	}
 	
 }

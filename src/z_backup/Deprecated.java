@@ -1,6 +1,13 @@
 package z_backup;
 
+
 public class Deprecated {
+	
+//	if (controls.getActionKey() == KeyCode.CONTROL) {
+////		System.out.println("Control pressed");
+//		world.getBlocks(World.vectorToGlobalID(ship.getPosition().addNew(ship.getOffset())), Settings.digRadius.get()).forEach(b -> b.setBlock(Material.AIR));
+//	}
+	
 //	/**
 //	 * Returns wether this entity intersects with input entity.
 //	 */
@@ -90,7 +97,6 @@ public class Deprecated {
 //try {
 //	Thread.sleep(0);
 //} catch (InterruptedException e) {
-//	// TODO Auto-generated catch block
 //	e.printStackTrace();
 //}
 //}

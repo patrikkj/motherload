@@ -1,6 +1,6 @@
 package equipment;
 
-import application.Settings;
+import misc.Settings;
 
 public enum Engine {
 	Standard(5000);

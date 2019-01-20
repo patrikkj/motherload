@@ -1,139 +1,127 @@
 package application;
 
 import entities.Ship;
-import enums.Material;
 import events.EventManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import utils.Vector2D;
-import world.World;
+import rendering.Renderer;
+import terrain.World;
+import terrain.WorldManager;
 
 public class Game implements Runnable {
-	// Game instance
 	private static Game game;
-		
-	// References
-	private World world;
-	private Controls controls;
-	private RenderEngine renderEngine;
-	
-	// Entity references
-	private Ship ship;
-	
-	// Layout references
-	private Scene scene;
-	private StackPane root;
-	private Canvas canvas;
-	private GraphicsContext gc;
-	
+	private static Ship ship;
+	private static World world;
+	private static WorldManager worldManager;
+	private static EventManager eventManager;
+	private static PhysicsEngine physicsEngine;
+	private static Controls controls;
+	private static Renderer renderer;
+	private static StageManager stageManager;
 	
 	// Constructor
-	public Game(Scene scene, StackPane root, Canvas canvas) {
+	public Game(Stage stage) {
+		
 		Game.game = this;
 		
-		this.world = World.get();
-		this.controls = Controls.get(); 
-		
-		this.scene = scene;
-		this.root = root;
-		this.canvas = canvas;
-		this.gc = canvas.getGraphicsContext2D();
-		
-		this.ship = new Ship(new Vector2D(0, -10), 200, null);
-		this.renderEngine = new RenderEngine();
-
-		initialize();
-	}
-	
-	private void initialize() {
+		ship = new Ship();
+		world = new World();
+		worldManager = new WorldManager(world);
+		eventManager = new EventManager();
+		stageManager = new StageManager(stage);
+		renderer = new Renderer(stageManager);
+		controls = new Controls();
+		physicsEngine = new PhysicsEngine();
 		controls.setKeyListeners();
+
+//		System.out.println("1renderer" + renderer.toString());
+//		System.out.println("1controls" + controls.toString());
+//		System.out.println("1eventManager" + eventManager.toString());
+//		System.out.println("1worldManager" + worldManager.toString());
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	
-	/**
-	 * Returns the one instance of this class.
-	 */
-	public static Game get() {
-		return game;
-	}
-	
-	
-	
-	
-	//// Game logic ////
 	/**
 	 * Main game loop.
 	 */
 	private void gameLoop() {
 		// Updates
-		renderEngine.updateFramerate();
+		renderer.updateFramerate();
 		controls.updateUserInput();
-		EventManager.get().checkEvents();
-		World.get().updateActiveChunks(ship.getPosition());
+		eventManager.checkEvents();
 		
-		if (controls.getActionKey() == KeyCode.CONTROL) {
-//			System.out.println("Control pressed");
-			world.getBlocks(World.vectorToGlobalID(ship.getPosition().addNew(ship.getOffset())), Settings.digRadius.get()).forEach(b -> b.setBlock(Material.AIR));
-		}
+		// World rendering
+		worldManager.updateActiveChunks(ship.getPosition());
 		
+//		System.out.println("2renderer" + renderer.toString());
+//		System.out.println("2controls" + controls.toString());
+//		System.out.println("2eventManager" + eventManager.toString());
+//		System.out.println("2worldManager" + worldManager.toString());
+//		System.out.println("2physicsEngine" + physicsEngine.toString());
 		// Entity movement
-		ship.calculateForce(controls.getDirection());
-		ship.move(renderEngine.getDeltaTime());
-		
+		physicsEngine.updateShip();
+//		System.out.println(ship.toString());
 		// Rendering
-		renderEngine.render(gc);
+		renderer.render();
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	/**
-	 * Initializes game and starts game loop.
+	 * Runs game loop.
 	 */
 	public void run() {
 		Timeline timeline = new Timeline(200); // 200
 		timeline.setCycleCount(Animation.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(8), e -> {	 // 1
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(8), e -> {
 			gameLoop(); 
 		}));
 		timeline.play();
 	}
 
 	
-	
-
-	
-	
-	
-	//// Getters ////
-	public Ship getShip() {
+	public static Game get() {
+		return game;
+	}
+	public static Game getGame() {
+		return game;
+	}
+	public static Ship getShip() {
 		return ship;
 	}
-	public Scene getScene() {
-		return scene;
-	}
-	public StackPane getRoot() {
-		return root;
-	}
-	public Canvas getCanvas() {
-		return canvas;
-	}
-	public World getWorld() {
+	public static World getWorld() {
 		return world;
 	}
-	public Controls getControls() {
+	public static WorldManager getWorldManager() {
+		return worldManager;
+	}
+	public static EventManager getEventManager() {
+		return eventManager;
+	}
+	public static PhysicsEngine getPhysicsEngine() {
+		return physicsEngine;
+	}
+	public static Controls getControls() {
 		return controls;
 	}
-	public RenderEngine getRenderEngine() {
-		return renderEngine;
+	public static Renderer getRenderer() {
+		return renderer;
 	}
-
-	
-	//// Other ////
-	
+	public static StageManager getStageManager() {
+		return stageManager;
+	}
 
 }

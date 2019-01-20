@@ -26,4 +26,10 @@ public class Collision {
 	public double getDeltaTime() {
 		return deltaTime;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Collision [material=" + material + ", direction=" + direction + ", deltaTime=" + deltaTime + "]";
+	}
 }

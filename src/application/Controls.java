@@ -7,63 +7,24 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import utils.Direction;
 
 public class Controls {
-	// Controls instance
-	private static Controls controls = new Controls();
-	
 	// User input
 	private Direction direction;
 	private KeyCode actionKey;
 	public static Map<KeyCode, Boolean> keysPressed = new HashMap<>();
 	
 	
-	private Controls() {
-		
-	}
-	
-	/**
-	 * Returns the one instance of this class.
-	 */
-	public static Controls get() {
-		return controls;
+	public Controls() {
+		setKeyListeners();
 	}
 	
 	/**
 	 * Assigns key listeners.
 	 */
-	protected void setKeyListeners() {
-		Scene scene = Game.get().getRoot().getScene();
-//		AnchorPane rootPane = new AnchorPane(); 
-		
-		
-		// Eksempel p� key bindings
-//		Scene scene = rootPane.getScene();
-		
-//		// Angir hva som skal skje idet et "KeyEvent" blir registrert.
-//		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//			@Override
-//			public void handle(KeyEvent event) {
-//				KeyCode key = event.getCode();
-//				System.out.println("KEYYYYYYYYYYYYYYYYY PRESSED");
-//				switch(key) {
-//				case DIGIT1:
-//					System.out.println("1-tasten ble trykket.");
-//					break;
-//				case DIGIT2:
-//					System.out.println("2-tasten ble trykket.");
-//					break;
-//				case DIGIT3:
-//					System.out.println("3-tasten ble trykket.");
-//					break;
-//				case RIGHT:
-//					System.out.println("H�yre piltast ble trykket.");
-//					break;
-//				}
-//			}
-//		});
+	public void setKeyListeners() {
+		Scene scene = Game.getStageManager().getScene();
 		
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override

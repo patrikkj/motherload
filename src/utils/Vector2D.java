@@ -1,5 +1,9 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
 public class Vector2D {
 	// Fields
 	public double x;
@@ -161,6 +165,9 @@ public class Vector2D {
 		return new Vector2D(v1.x / v2.x, v1.y / v2.y);
 	}
 	
+	public static Vector2D combine(Collection<Vector2D> vectors) {
+		return vectors.stream().reduce((v1, v2) -> v1.add(v2)).orElse(null);
+	}
 	
 	// Calculations
 	public double magnitude() {
@@ -170,10 +177,13 @@ public class Vector2D {
 	public double angle() {
 		return -1 * Math.atan2(-y, x);
 	}
+	public String toString2() {
+		return String.format("[%.2f, %.2f]", x, y).replace(',', '.').replace(". ", ", ");
+	}
 	
 	@Override
 	public String toString() {
-		return String.format("[%.3f, %.3f]", x, y).replace(',', '.').replace(". ", ", ");
+		return String.format("[%.1f, %.1f]", x, y).replace(',', '.').replace(". ", ", ");
 	}
 }
 

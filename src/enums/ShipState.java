@@ -4,6 +4,6 @@ public enum ShipState {
 	FLYING	(),
 	DRIVING	(),
 	DIGGING	(),
-	HOVERING();
+	IDLE	();
 	
 }

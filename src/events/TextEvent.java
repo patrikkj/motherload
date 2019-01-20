@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import utils.Vector2D;
 
-public abstract class TextDisplayEvent extends Event {
+public abstract class TextEvent extends Event {
 	
 	private String text;
 	private Font font;
@@ -19,7 +19,7 @@ public abstract class TextDisplayEvent extends Event {
 	
 	
 	// Constructors
-	public TextDisplayEvent(String text, Font font, Color color, DisplayType displayType, Vector2D coords, Vector2D offset) {
+	public TextEvent(String text, Font font, Color color, DisplayType displayType, Vector2D coords, Vector2D offset) {
 		this.text = text;
 		this.font = font;
 		this.color = color;
@@ -28,7 +28,7 @@ public abstract class TextDisplayEvent extends Event {
 		this.offset = offset;
 	}
 	
-	public TextDisplayEvent(String text, Font font, Color color, DisplayType displayType, Entity entity, Vector2D offset) {
+	public TextEvent(String text, Font font, Color color, DisplayType displayType, Entity entity, Vector2D offset) {
 		this.text = text;
 		this.font = font;
 		this.color = color;

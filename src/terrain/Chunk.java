@@ -1,64 +1,43 @@
-package world;
+package terrain;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import application.Settings;
 import entities.Block;
 import enums.Material;
+import misc.Settings;
 import utils.Vector2D;
 
 public class Chunk implements Iterable<Block> {
 	// Fields
-	private final Block[] blocks = new Block[Settings.blocksPerChunk.get()];
-	private final Integer chunkID;
-	private final Vector2D pos;
+	private Block[] blocks;
+	private Integer chunkID;
 
 	
-	// Constructor
-	public Chunk(Integer chunkID) {
+	public Chunk(Integer chunkID, Block[] blocks) {
 		this.chunkID = chunkID;
-		this.pos = World.globalIDToVector(chunkID);
-//		if (pos.x != Settings.chunkSize.get()  &&  pos.y != 0)
-			generateBlocks();
-	}
-
-	
-	// Block generation
-	private void generateBlocks() {
-		for (int localID = 0; localID < Settings.blocksPerChunk.get(); localID++)
-			blocks[localID] = generateBlock(chunkID + localID);
+		this.blocks = blocks;
 	}
 	
-	private Block generateBlock(Integer globalID) {
-		final Vector2D pos = World.globalIDToVector(globalID);
-		Material mat = (pos.y == 0) ? Material.GRASS : Material.ORE_DIAMOND;
-		return new Block(mat, globalID);
-	}
 
 	// Getters
+	public Integer getChunkID() {
+		return chunkID;
+	}
+	
 	public Block getBlock(int x, int y) {
 		return blocks[y * Settings.chunkSize.get()  +  x];
 	}
 	
-	public Block getBlockLocal(int ID) {
-		return blocks[ID];
-	}
-	
-	public Block getBlockGlobal(int ID) {
-		return getBlockLocal(World.globalIDToLocalID(ID));
+	public Block getBlock(int localID) {
+		return blocks[localID];
 	}
 	
 	public Collection<Block> getBlocks() {
 		return Arrays.asList(blocks);
 	}
 	
-	public Vector2D getPos() {
-		return pos;
-	}
-	
-
 
 	// Static chunk conversion 
 	/**
@@ -89,9 +68,9 @@ public class Chunk implements Iterable<Block> {
 		return toChunkID(new Vector2D(x, y));
 	}
 	
-	
 	@Override
 	public Iterator<Block> iterator() {
 		return Arrays.stream(blocks).iterator();
 	}
+
 }

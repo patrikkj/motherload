@@ -31,6 +31,9 @@ public class Rectangle2D {
 	public double getHeight() {
 		return height;
 	}
+	public Vector2D getDiagonal() {
+		return new Vector2D(width, height);
+	}
 	
 	// Setters
 	public void set(Rectangle2D r) {
@@ -88,6 +91,6 @@ public class Rectangle2D {
 	
 	@Override
 	public String toString() {
-		return String.format("pos=%s, width=%.3f, height=%.3f]", position, width, height).replace(',', '.').replace(". ", ", ");
+		return "Rectangle2D [position=" + position + ", width=" + width + ", height=" + height + "]";
 	}
 }

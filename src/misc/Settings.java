@@ -1,4 +1,4 @@
-package application;
+package misc;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -35,7 +35,7 @@ public class Settings {
 	public static final IntegerProperty maxChunksY = new SimpleIntegerProperty(256);// 256, 1 for debug
 
 	// World
-	public static final ObjectProperty<Vector2D> gravity = new SimpleObjectProperty<>(new Vector2D(0 * G, 1 * G));
+	public static final ObjectProperty<Vector2D> gravity = new SimpleObjectProperty<>(new Vector2D(0 * G, 0 * G));
 	public static final DoubleProperty linearDrag = new SimpleDoubleProperty(60);// 60, 6000 for debug
 	public static final DoubleProperty angularDrag = new SimpleDoubleProperty(60);// 60, 6000 for debug
 	public static final DoubleProperty timeScaleFactor = new SimpleDoubleProperty(1);// 1, 0.5 for debug
@@ -48,13 +48,13 @@ public class Settings {
 	// Rendering
 	public static final DoubleProperty targetFramerate = new SimpleDoubleProperty(60);
 	public static final IntegerProperty renderRadius = new SimpleIntegerProperty(3);
-	public static final DoubleProperty cameraSpeed = new SimpleDoubleProperty(5);
+	public static final DoubleProperty cameraSpeed = new SimpleDoubleProperty(15);
 	
 	// Ship
-	public static final DoubleProperty engineScaleFactor = new SimpleDoubleProperty(1);// 2.5, 1,5 for debug
+	public static final DoubleProperty engineScaleFactor = new SimpleDoubleProperty(3);// 2.5, 1,5 for debug
 	public static final IntegerProperty collisionRadius = new SimpleIntegerProperty(1);
-	public static final DoubleProperty shipWidthPixels = new SimpleDoubleProperty(48*1);// 61, 192 for debug
-	public static final DoubleProperty shipHeightPixels = new SimpleDoubleProperty(48*1);// 34, 64 for debug
+	public static final DoubleProperty shipWidthPixels = new SimpleDoubleProperty(64);// 61, 192 for debug 48
+	public static final DoubleProperty shipHeightPixels = new SimpleDoubleProperty(64);// 34, 64 for debug 48
 	public static final DoubleProperty shipWidthGrid = new SimpleDoubleProperty();
 	public static final DoubleProperty shipHeightGrid = new SimpleDoubleProperty();
 	

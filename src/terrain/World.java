@@ -1,33 +1,20 @@
-package world;
+package terrain;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import application.Settings;
 import entities.Block;
-import entities.Entity;
-import enums.Material;
+import misc.Settings;
 import utils.Vector2D;
 
 public class World {
-	// World instance
-	private static World world = new World();
-
-	// Rendering (Chunks are separated from other entities)
-	private int currentChunkID;
 	private Map<Integer, Chunk> chunks = new HashMap<>();
-	private Collection<Entity> entities = new ArrayList<>(); 
-	private Collection<Chunk> activeChunks = new ArrayList<>();
-
+	private long seed;
 	
-	/**
-	 * Returns the one instance of this class.
-	 */
-	public static World get() {
-		return world;
+	public World() {
+		this.seed = System.nanoTime();
 	}
 	
 	/**
@@ -36,7 +23,16 @@ public class World {
 	public Block getBlock(int globalID) {
 		final int chunkID = globalIDToChunkID(globalID);
 		final int localID = globalIDToLocalID(globalID);
-		return chunks.get(chunkID).getBlockLocal(localID);
+		try {
+			return chunks.get(chunkID).getBlock(localID);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Pos vector: " + World.globalIDToVector(globalID));
+			System.out.println("global ID: " + globalID);
+			System.out.println("local ID: " + localID);
+		}
+		return null;
 	}
 
 	/**
@@ -65,10 +61,10 @@ public class World {
 		Vector2D coord = globalIDToVector(globalID);
 		
 		// Loop range
-		int minX = (int) coord.x - radius;
-		int maxX = (int) coord.x + radius;
-		int minY = (int) coord.y - radius;
-		int maxY = (int) coord.y + radius;
+		int minX = Math.max((int) coord.x - radius, (int) Settings.lowerBoundX.get());
+		int maxX = Math.min((int) coord.x + radius, (int) Settings.upperBoundX.get());
+		int minY = Math.max((int) coord.y - radius, (int) Settings.lowerBoundY.get());
+		int maxY = Math.min((int) coord.y + radius, (int) Settings.upperBoundY.get());
 		
 		for (int y = minY; y <= maxY; y++)
 			for (int x = minX; x <= maxX; x++)
@@ -161,7 +157,7 @@ public class World {
 	 * @param radius - radius.
 	 * @return Collection of chunk IDs for given area.
 	 */
-	public static Collection<Integer> getChunkIDs(int chunkID, int radius) {
+	public static Collection<Integer> getChunkIDsWithinRadius(int chunkID, int radius) {
 		Collection<Integer> chunks = new ArrayList<>();
 		Vector2D chunkVector = Chunk.toChunkVector(chunkID);
 		
@@ -213,44 +209,18 @@ public class World {
 	}
 	
 	/**
-	 * Returns a collection containing all chunks currently rendered.
+	 * Getter for seed used in world generation.
 	 */
-	public Collection<Chunk> getActiveChunks(){
-		return activeChunks;
+	public long getSeed() {
+		return seed;
 	}
-
+	
 	/**
-	 * Updates list of chunks to be passed to the render engine.
+	 * Returns a hashmap containing all chunks generated.
 	 */
-	public void updateActiveChunks(Vector2D position) {
-		int lastChunkID = currentChunkID;
-		currentChunkID = vectorToChunkID(position);
-		
-		// Executed upon entering new or initialization
-		if (lastChunkID != currentChunkID  ||  chunks.isEmpty()) {
-			// IDs to be rendered this cycle
-			Collection<Integer> renderIDs = getChunkIDs(currentChunkID, Settings.renderRadius.get());
-			
-			// Convert to list of chunks
-			activeChunks = renderIDs.stream().map(ID -> assertChunk(ID)).collect(Collectors.toList());
-		}
+	public Map<Integer, Chunk> getChunks() {
+		return chunks;
 	}
-	
-	////World manipulation ////
-	/**
-	 * Asserts that cache contains chunk represented by chunk ID.
-	 * If there is no chunk mapping for given chunk ID, a new chunk is generated and returned.
-	 * @param chunkID - chunk ID.
-	 * @return Chunk mapping corresponding to the given chunk ID.
-	 */
-	public Chunk assertChunk(int chunkID) {
-		return chunks.computeIfAbsent(chunkID, ID -> new Chunk(ID));
-	}
-	
-	public void setBlock(int globalID, Material material) {
-		getBlock(globalID).setMaterial(material);
-	}
-	
 	
 	
 	

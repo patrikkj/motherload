@@ -1,7 +1,5 @@
 package enums;
 
-import javafx.scene.image.Image;
-
 public enum Material {
 	//				Drillable	Collidable	Hardness	Friction	Elasticity	Name
 //	NONE			(false,		false,		0, 			0, 			0, 			"None"),
@@ -63,7 +61,4 @@ public enum Material {
 		return resource;
 	}
 	
-	public Image getImage() {
-		return resource.getImage();
-	}
 }
