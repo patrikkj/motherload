@@ -30,12 +30,12 @@ public class Settings {
 	public static final IntegerProperty blocksPerColumn = new SimpleIntegerProperty();
 
 	// Chunks
-	public static final IntegerProperty chunkSize = new SimpleIntegerProperty(8);
+	public static final IntegerProperty chunkSize = new SimpleIntegerProperty(16);
 	public static final IntegerProperty maxChunksX = new SimpleIntegerProperty(256);// 256, 1 for debug
 	public static final IntegerProperty maxChunksY = new SimpleIntegerProperty(256);// 256, 1 for debug
 
 	// World
-	public static final ObjectProperty<Vector2D> gravity = new SimpleObjectProperty<>(new Vector2D(0 * G, 0 * G));
+	public static final ObjectProperty<Vector2D> gravity = new SimpleObjectProperty<>(new Vector2D(0 * G, 1 * G));
 	public static final DoubleProperty linearDrag = new SimpleDoubleProperty(60);// 60, 6000 for debug
 	public static final DoubleProperty angularDrag = new SimpleDoubleProperty(60);// 60, 6000 for debug
 	public static final DoubleProperty timeScaleFactor = new SimpleDoubleProperty(1);// 1, 0.5 for debug
@@ -48,10 +48,10 @@ public class Settings {
 	// Rendering
 	public static final DoubleProperty targetFramerate = new SimpleDoubleProperty(60);
 	public static final IntegerProperty renderRadius = new SimpleIntegerProperty(3);
-	public static final DoubleProperty cameraSpeed = new SimpleDoubleProperty(15);
+	public static final DoubleProperty cameraSpeed = new SimpleDoubleProperty(5);
 	
 	// Ship
-	public static final DoubleProperty engineScaleFactor = new SimpleDoubleProperty(3);// 2.5, 1,5 for debug
+	public static final DoubleProperty engineScaleFactor = new SimpleDoubleProperty(1);// 2.5, 1,5 for debug
 	public static final IntegerProperty collisionRadius = new SimpleIntegerProperty(1);
 	public static final DoubleProperty shipWidthPixels = new SimpleDoubleProperty(64);// 61, 192 for debug 48
 	public static final DoubleProperty shipHeightPixels = new SimpleDoubleProperty(64);// 34, 64 for debug 48

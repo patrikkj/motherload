@@ -15,7 +15,7 @@ public class WorldGenerator {
 	 */
 	//				
 	private static double getNoise(int x, int y, long seed) {
-		random.setSeed(x*10 + y*10 + seed);
+		random.setSeed(x*1000 * y + seed);
 		return random.nextFloat();
 	}
 	
@@ -35,18 +35,18 @@ public class WorldGenerator {
 				blocks[localID++] = new Block(new Vector2D(x + dx, y + dy), material);
 			}
 		}
-		System.out.println("New chunk created, blockcount = " + blocks.length);
 		return new Chunk(chunkID, blocks);
 	}
 	
 	private static Material assignMaterial(int x, int y, long seed) {
-//		double noise = getNoise(x, y, seed);
-		return Material.AIR;
-//		if (y == 0) return Material.GRASS;
-//		if (noise < 0.80) return Material.DIRT;
-//		else if (noise < 0.88) return Material.ORE_EMERALD; 
-//		else if (noise < 0.94) return Material.ORE_RUBY; 
-//		else if (noise < 0.98) return Material.ORE_AMETHYST; 
-//		else return Material.ORE_DIAMOND; 
+		double noise = getNoise(x, y, seed);
+		System.out.println(noise);
+		if (y < 0) return Material.AIR;
+		if (y == 0) return Material.GRASS;
+		if (noise < 0.95) return Material.DIRT;
+		else if (noise < 0.97) return Material.ORE_EMERALD; 
+		else if (noise < 0.985) return Material.ORE_RUBY; 
+		else if (noise < 0.995) return Material.ORE_AMETHYST; 
+		else return Material.ORE_DIAMOND; 
 	}
 }

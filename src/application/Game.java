@@ -35,18 +35,6 @@ public class Game implements Runnable {
 		renderer = new Renderer(stageManager);
 		controls = new Controls();
 		physicsEngine = new PhysicsEngine();
-		controls.setKeyListeners();
-
-//		System.out.println("1renderer" + renderer.toString());
-//		System.out.println("1controls" + controls.toString());
-//		System.out.println("1eventManager" + eventManager.toString());
-//		System.out.println("1worldManager" + worldManager.toString());
-//		try {
-//			Thread.sleep(1000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 	
 	
@@ -62,22 +50,11 @@ public class Game implements Runnable {
 		// World rendering
 		worldManager.updateActiveChunks(ship.getPosition());
 		
-//		System.out.println("2renderer" + renderer.toString());
-//		System.out.println("2controls" + controls.toString());
-//		System.out.println("2eventManager" + eventManager.toString());
-//		System.out.println("2worldManager" + worldManager.toString());
-//		System.out.println("2physicsEngine" + physicsEngine.toString());
 		// Entity movement
 		physicsEngine.updateShip();
-//		System.out.println(ship.toString());
+
 		// Rendering
 		renderer.render();
-//		try {
-//			Thread.sleep(1000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 	
 	/**

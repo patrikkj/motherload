@@ -35,15 +35,15 @@ public class TextureRenderer {
 		final Collection<Chunk> chunks = worldManager.getActiveChunks();
 		for (Chunk chunk : chunks)
 			for (Block block : chunk) {
-				// Block position text
+//				// Block position text
 				Vector2D layoutCoords = camera.toLayoutCoords(block.getPosition());
-				gc.setFill(Color.BLACK);
-				gc.setFont(new javafx.scene.text.Font(10));
-				gc.fillText(block.getPosition().toString(), layoutCoords.x, layoutCoords.y);
-				gc.fillText(block.getMaterial().getName(), layoutCoords.x-15, layoutCoords.y-15);
+//				gc.setFill(Color.BLACK);
+//				gc.setFont(new javafx.scene.text.Font(10));
+//				gc.fillText(block.getPosition().toString(), layoutCoords.x, layoutCoords.y);
+//				gc.fillText(block.getMaterial().getName(), layoutCoords.x-15, layoutCoords.y-15);
 
 				// Block sprite
-				gc.setFill(Color.CADETBLUE);
+				gc.setFill(block.getMaterial().getColor());
 				gc.fillRect(layoutCoords.x, layoutCoords.y, Settings.blockSize.get(), Settings.blockSize.get());
 				
 //				gc.fillOval(layoutCoords.x, layoutCoords.y, 3, 3);

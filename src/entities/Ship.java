@@ -12,12 +12,10 @@ public class Ship extends DynamicEntity {
 	
 	public Ship() {
 		this(new Vector2D(0, -10));
-		System.out.println("pos call 1 const");
 	}
 	
 	public Ship(Vector2D position) {
-		super(position, Settings.shipWidthGrid.get(), Settings.shipHeightGrid.get(), null, 200);
-		System.out.println("pos call 2 const");
+		super(position, Settings.shipWidthGrid.get(), Settings.shipHeightGrid.get(), null, 100);
 		equipDefault();
 	}
 	
