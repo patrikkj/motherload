@@ -98,10 +98,6 @@ public class PhysicsEngine {
 		
 	}
 	
-	/**
-	 * Returns 
-	 * @return
-	 */
 	private Block getCollidingBlock() {
 		// Comparator prioritizing entities that are closer to the ship
 		Comparator<Block> incDistance = (b1, b2) -> (int) Math.signum(Entity.distanceBetween(ship, b1) - Entity.distanceBetween(ship, b2));
@@ -110,6 +106,7 @@ public class PhysicsEngine {
 		return Game.getWorld()
 				.getBlocks(ship.getPosition(), Settings.collisionRadius.get())
 				.stream()
+				.filter(b -> b.getMaterial().isCollidable())
 				.sorted(incDistance)
 				.filter(b -> Entity.intersects(ship, b))
 				.findFirst()
