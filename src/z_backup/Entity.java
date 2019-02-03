@@ -75,7 +75,6 @@ public class Entity {
 		this.height = height;
 		
 		this.material = material;
-		this.resource = material.getResource();
 
 		this.body = Body.STATIC;
 		initDefault(body);
