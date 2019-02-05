@@ -56,9 +56,8 @@ public class World {
 	 * @param radius - radius.
 	 * @return Collection of blocks specified by global ID and radius.
 	 */
-	public Collection<Block> getBlocks(int globalID, int radius) {
+	public Collection<Block> getBlocks(Vector2D coord, int radius) {
 		Collection<Block> blocks = new ArrayList<>();
-		Vector2D coord = globalIDToVector(globalID);
 		
 		// Loop range
 		int minX = Math.max((int) coord.x - radius, (int) Settings.lowerBoundX.get());
@@ -74,26 +73,26 @@ public class World {
 		return blocks;
 	}
 	
-	/**
-	 * Getter for a collection of blocks contained within specified area.
-	 * @param vector - Global position for center block.
-	 * @param radius - radius.
-	 * @return Collection of blocks specified by global position vector and radius.
-	 */
-	public Collection<Block> getBlocks(Vector2D vector, int radius) {
-		return getBlocks(vectorToGlobalID(vector), radius);
-	}
+//	/**
+//	 * Getter for a collection of blocks contained within specified area.
+//	 * @param vector - Global position for center block.
+//	 * @param radius - radius.
+//	 * @return Collection of blocks specified by global position vector and radius.
+//	 */
+//	public Collection<Block> getBlocks(Vector2D vector, int radius) {
+//		return getBlocks(vectorToGlobalID(vector), radius);
+//	}
 	
-	/**
-	 * Getter for a collection of blocks contained within specified area.
-	 * @param x - Global x-coordinate for center block.
-	 * @param y - Global y-coordinate for center block.
-	 * @param radius - radius.
-	 * @return Collection of blocks specified by global coordinates and radius.
-	 */
-	public Collection<Block> getBlocks(int x, int y, int radius) {
-		return getBlocks(coordToGlobalID(x, y), radius);
-	}
+//	/**
+//	 * Getter for a collection of blocks contained within specified area.
+//	 * @param x - Global x-coordinate for center block.
+//	 * @param y - Global y-coordinate for center block.
+//	 * @param radius - radius.
+//	 * @return Collection of blocks specified by global coordinates and radius.
+//	 */
+//	public Collection<Block> getBlocks(int x, int y, int radius) {
+//		return getBlocks(coordToGlobalID(x, y), radius);
+//	}
 	
 	
 	/**

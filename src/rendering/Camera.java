@@ -12,7 +12,7 @@ public class Camera {
 	
 	public Camera(Ship ship) {
 		this.ship = ship;
-		this.coords = ship.getPosition().copy();
+		this.coords = ship.getCenter().copy();
 		this.offset = new Vector2D(Settings.blocksX.get(), Settings.blocksY.get()).divide(2);
 	}
 	
@@ -21,7 +21,7 @@ public class Camera {
 	 * Gradually moves camera towards ship.
 	 */
 	public void moveCamera(double deltaTime) {
-		Vector2D offset = coords.subtractNew(ship.getPosition());
+		Vector2D offset = coords.subtractNew(ship.getCenter());
 		coords = coords.subtract(offset.multiply(Settings.cameraSpeed.get() * deltaTime));
 //		camera.clamp(lBound, uBound);
 	}
@@ -30,7 +30,7 @@ public class Camera {
 	 * Resets rendering components.
 	 */
 	public void resetCamera() {
-		this.coords = ship.getPosition().copy();
+		this.coords = ship.getCenter().copy();
 		this.offset = new Vector2D(Settings.blocksX.get(), Settings.blocksY.get()).divide(2);
 	}
 	

@@ -31,7 +31,7 @@ public class EntityRenderer {
 		Vector2D layoutCoords = camera.toLayoutCoords(ship.getPosition());
 		gc.setFill(Color.BLACK);
 		gc.setFont(new javafx.scene.text.Font(10));
-		gc.fillText("Ship: " + ship.getPosition().toString2(), layoutCoords.x, layoutCoords.y);
+		gc.fillText("Ship: " + ship.getCenter().toString2(), layoutCoords.x, layoutCoords.y);
 		
 		Vector2D lCoords = camera.toLayoutCoords(ship.getPosition());
 		

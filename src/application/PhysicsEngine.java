@@ -114,8 +114,8 @@ public class PhysicsEngine {
 	}
 	
 	private Collision createCollision(Block block, double deltaTime) {
-		System.out.println("Creating collision, Block = " + block.toString());
-		System.out.println("Creating collision, Ship = " + ship.toString());
+//		System.out.println("Creating collision, Block = " + block.toString());
+//		System.out.println("Creating collision, Ship = " + ship.toString());
 		Material material =  block.getMaterial();
 		Direction direction;
 		

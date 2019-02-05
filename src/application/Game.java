@@ -18,6 +18,7 @@ public class Game implements Runnable {
 	private static Game game;
 	private static Ship ship;
 	private static World world;
+	private static Loader loader;
 	private static WorldManager worldManager;
 	private static EventManager eventManager;
 	private static PhysicsEngine physicsEngine;
@@ -32,6 +33,7 @@ public class Game implements Runnable {
 		
 		ship = new Ship();
 		world = new World();
+		loader = new Loader();
 		worldManager = new WorldManager(world);
 		eventManager = new EventManager();
 		stageManager = new StageManager(stage);
@@ -51,8 +53,13 @@ public class Game implements Runnable {
 		eventManager.checkEvents();
 		
 		if (controls.getActionKey() == KeyCode.CONTROL) {
-			System.out.println("Control pressed");
-			world.getBlocks(World.vectorToGlobalID(ship.getCenter()), Settings.digRadius.get()).forEach(b -> b.setMaterial(Material.AIR));
+//			world.getBlocks(World.vectorToGlobalID(ship.getCenter()), Settings.digRadius.get()).forEach(b -> System.out.println(b));
+//			System.out.printf("Ship center: %s\n", ship.getCenter());
+//			double moveRate = ship.getVelocity().multiplyNew(renderer.getDeltaTime()).magnitude();
+//			System.out.printf("Move rate: %s\n", moveRate);
+			
+//			if (ship.getVelocity().multiplyNew(renderer.getDeltaTime()).magnitude() > 1)
+			world.getBlocks(ship.getCenter().addNew(ship.getVelocity().multiplyNew(0.2)), Settings.digRadius.get()).forEach(b -> b.setMaterial(Material.AIR));
 		}
 		
 		// World rendering
@@ -90,6 +97,9 @@ public class Game implements Runnable {
 	}
 	public static World getWorld() {
 		return world;
+	}
+	public static Loader getLoader() {
+		return loader;
 	}
 	public static WorldManager getWorldManager() {
 		return worldManager;

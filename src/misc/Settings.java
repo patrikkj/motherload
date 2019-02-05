@@ -47,7 +47,7 @@ public class Settings {
 	
 	// Rendering
 	public static final DoubleProperty targetFramerate = new SimpleDoubleProperty(60);
-	public static final IntegerProperty renderRadius = new SimpleIntegerProperty(3);
+	public static final IntegerProperty renderRadius = new SimpleIntegerProperty(2);
 	public static final DoubleProperty cameraSpeed = new SimpleDoubleProperty(5);
 	
 	// Ship
@@ -59,7 +59,7 @@ public class Settings {
 	public static final DoubleProperty shipHeightGrid = new SimpleDoubleProperty();
 	
 	// Debugging
-	public static final IntegerProperty digRadius= new SimpleIntegerProperty(2);
+	public static final IntegerProperty digRadius= new SimpleIntegerProperty(1);
 	
 	
 	// Composite bindings

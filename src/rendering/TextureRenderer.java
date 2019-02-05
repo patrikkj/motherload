@@ -3,6 +3,7 @@ package rendering;
 import java.util.Collection;
 
 import application.Game;
+import application.Loader;
 import entities.Block;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -13,11 +14,13 @@ import utils.Vector2D;
 
 public class TextureRenderer {
 	private WorldManager worldManager;
+	private Loader loader;
 	private Camera camera;
 	private GraphicsContext gc;
 
 	public TextureRenderer(Camera camera, GraphicsContext gc) {
 		this.worldManager = Game.getWorldManager();
+		this.loader = Game.getLoader();
 		this.camera = camera;
 		this.gc = gc;
 	}
@@ -37,18 +40,22 @@ public class TextureRenderer {
 			for (Block block : chunk) {
 //				// Block position text
 				Vector2D layoutCoords = camera.toLayoutCoords(block.getPosition());
-//				gc.setFill(Color.BLACK);
-//				gc.setFont(new javafx.scene.text.Font(10));
 //				gc.fillText(block.getPosition().toString(), layoutCoords.x, layoutCoords.y);
-//				gc.fillText(block.getMaterial().getName(), layoutCoords.x-15, layoutCoords.y-15);
+//				gc.fillText(block.getMaterial().getName(), layoutCoords.x-30, layoutCoords.y-30);
 
 				// Block sprite
-				gc.setFill(block.getMaterial().getColor());
-				gc.fillRect(layoutCoords.x, layoutCoords.y, Settings.blockSize.get(), Settings.blockSize.get());
+//				gc.setFill(block.getMaterial().getColor());
+//				gc.fillRect(layoutCoords.x, layoutCoords.y, Settings.blockSize.get(), Settings.blockSize.get());
 				
 //				gc.fillOval(layoutCoords.x, layoutCoords.y, 3, 3);
-//				gc.drawImage(block.getImage(), layoutCoords.x, layoutCoords.y);
+				gc.drawImage(loader.getImage(block.getMaterial()), layoutCoords.x, layoutCoords.y, Settings.blockSize.get(), Settings.blockSize.get());
+//				gc.drawImage(loader.getImage(block.getMaterial()), 128, 128, 128, 128, 64, 64, 64, 64);;
 //				gc.setFont(new javafx.scene.text.Font(18));
+
+//				gc.setFill(Color.WHITE);
+//				gc.setFont(new javafx.scene.text.Font(10));
+//				gc.fillText(block.getCenter().toString(), layoutCoords.x, layoutCoords.y+15);
+//				gc.fillText(String.format("%.3g", Entity.distanceBetween(Game.getShip(), block)), layoutCoords.x, layoutCoords.y+30);
 			}
 	}
 	
@@ -59,9 +66,9 @@ public class TextureRenderer {
 	private void renderGrid() {
 		Vector2D layoutCamera = camera.toLayoutCoords(camera.getCoords());
 		
-		gc.setFill(Color.BLACK);
-		gc.setFont(new javafx.scene.text.Font(10));
-		gc.fillText("Cam: "+ camera.getCoords().toString2(), layoutCamera.x, layoutCamera.y - 15);
+//		gc.setFill(Color.BLACK);
+//		gc.setFont(new javafx.scene.text.Font(10));
+//		gc.fillText("Cam: "+ camera.getCoords().toString2(), layoutCamera.x, layoutCamera.y - 15);
 		
 		gc.setFill(Color.AQUA);
 		gc.fillOval(layoutCamera.x, layoutCamera.y, 3, 3);

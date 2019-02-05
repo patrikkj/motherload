@@ -19,7 +19,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import enums.Resource;
+import enums.Material;
 import javafx.scene.image.Image;
 
 public class Loader {
@@ -29,14 +29,14 @@ public class Loader {
 	// Uniform resource identifier, used for resolving absolute file paths
 	private final URI DEFAULT_TILESET_URI;
 	
-	// O(1) mapping from resources to corresponding image
-	public final EnumMap<Resource, Image> images = new EnumMap<>(Resource.class);
+	// O(1) mapping from material to corresponding image
+	public final EnumMap<Material, Image> images = new EnumMap<>(Material.class);
 	
 	
 	// Constructor
 	public Loader() {
 		try {
-			DEFAULT_TILESET_URL = Loader.class.getResource("../graphics/128px/tilesets/default.xml");
+			DEFAULT_TILESET_URL = Loader.class.getResource("../resources/textures/128px/tilesets/default.xml");
 			DEFAULT_TILESET_URI = DEFAULT_TILESET_URL.toURI();
 		} catch (URISyntaxException e) {
 			throw new RuntimeException(e.getMessage());
@@ -48,10 +48,10 @@ public class Loader {
 	
 	// Tilesets
 	/**
-	 * Returns the image associated with given resource, if present.
+	 * Returns the image associated with given material, if present.
 	 */
-	public Image getImage(Resource resource) {
-		return images.get(resource);
+	public Image getImage(Material material) {
+		return images.get(material);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class Loader {
 	 * represented by {@code uri} and {@code relativePath}.
 	 */
 	private void putImage(URI uri, String type, String relativePath) {
-		Resource resource = Resource.valueOf(type.toUpperCase());
+		Material material = Material.valueOf(type.toUpperCase());
 		URI resolved = uri.resolve(relativePath);
 		Image image = null;
 		
@@ -125,7 +125,7 @@ public class Loader {
 		}
 
 		// Add entry
-		images.put(resource, image);
+		images.put(material, image);
 	}
 	
 	// Private helper methods

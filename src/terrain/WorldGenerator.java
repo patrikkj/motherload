@@ -40,9 +40,11 @@ public class WorldGenerator {
 	
 	private static Material assignMaterial(int x, int y, long seed) {
 		double noise = getNoise(x, y, seed);
-		System.out.println(noise);
+//		System.out.println(noise);
 		if (y < 0) return Material.AIR;
 		if (y == 0) return Material.GRASS;
+		
+		noise +=  (1-noise)*((double)y/1000);
 		if (noise < 0.95) return Material.DIRT;
 		else if (noise < 0.97) return Material.ORE_EMERALD; 
 		else if (noise < 0.985) return Material.ORE_RUBY; 
